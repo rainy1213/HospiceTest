@@ -1,0 +1,68 @@
+<app-loading [condition]="isLoading"></app-loading>
+
+<app-toast [message]="toast.message"></app-toast>
+
+<div class="card mb-3" *ngIf="!isLoading">
+  <h4 class="card-header">Current userpreferences ({{userpreferences.length}})   <button class="btn btn-sm btn-primary" routerLink="/adduserpreference">
+     Add    
+  </button> </h4>
+  
+  <div class="card-body">
+    <table class="table table-bordered">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">FirstName</th>
+          <th scope="col">LastName</th>
+          <th scope="col">Age</th>
+          <th scope="col">ColorPreference</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="userpreferences.length === 0">
+        <tr>
+          <td colspan="5">There are no userpreferences in the DB. Add a new userpreference below.</td>
+        </tr>  
+      </tbody>
+      <tbody *ngIf="!isEditing">
+        <tr *ngFor="let userpreference of userpreferences">
+          <td>{{userpreference.firstname}}</td>
+          <td>{{userpreference.lastname}}</td>
+          <td>{{userpreference.age}}</td>
+          <td>{{userpreference.colorpreference}}</td>
+          <td>
+            <button class="btn btn-sm btn-primary" (click)="enableEditing(userpreference)">
+              <i class="fa fa-pencil"></i> Edit
+            </button> 
+            <button class="btn btn-sm btn-danger ml-1" (click)="deleteUserPreference(userpreference)">
+              <i class="fa fa-trash"></i> Delete
+            </button>
+          </td>
+        </tr>  
+      </tbody>
+      <tbody *ngIf="isEditing">
+        <tr>
+          <td colspan="5">
+            <form class="form-inline" #form="ngForm" (ngSubmit)="editUserPreference(userpreference)">
+              <input class="form-control mr-2" type="text" name="firstname"
+                     [(ngModel)]="userpreference.firstname" placeholder="FirstName" required>
+              <input class="form-control mr-2" type="text" name="lastname"
+                     [(ngModel)]="userpreference.lastname" placeholder="LastName" required>
+              <input class="form-control mr-2" type="number" name="age"
+                     [(ngModel)]="userpreference.age" placeholder="Age" min="0" required>
+              <input class="form-control mr-2" type="text" name="colorpreference"
+                     [(ngModel)]="userpreference.colorpreference" placeholder="ColorPreference" required>
+              <button class="btn btn-sm btn-primary mr-2" type="submit" [disabled]="!form.form.valid">
+                <i class="fa fa-floppy-o"></i> Save
+              </button>
+              <button class="btn btn-sm btn-warning" (click)="cancelEditing()">
+                <i class="fa fa-times"></i> Cancel
+              </button>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+

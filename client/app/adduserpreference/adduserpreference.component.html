@@ -1,0 +1,28 @@
+<app-loading [condition]="isLoading"></app-loading>
+
+<app-toast [message]="toast.message"></app-toast>
+
+<div class="card" *ngIf="!isEditing">
+  <h4 class="card-header">Add new userpreference</h4>
+  <div class="card-body">
+    <form class="form-inline" [formGroup]="addUserPreferenceForm" (ngSubmit)="addUserPreference()">
+      <input class="form-control mr-2" type="text" name="firstname"
+             formControlName="firstname" placeholder="FirstName">
+      <input class="form-control mr-2" type="text" name="lastname"
+             formControlName="lastname" placeholder="LastName">
+      <input class="form-control mr-2" type="number" name="age"
+             formControlName="age" placeholder="Age" min="0">
+      <input class="form-control mr-2" type="text" name="colorpreference"
+             formControlName="colorpreference" placeholder="ColorPreference" list="colorname">
+             <datalist id="colorname">
+              <option value="red">
+              <option value="blue">
+              <option value="yellow">
+            </datalist>
+      <button class="btn btn-primary" type="submit" [disabled]="!addUserPreferenceForm.valid">
+        <i class="fa fa-plus"></i> Add
+      </button>
+    </form>
+  </div>
+</div>
+
